@@ -23,5 +23,9 @@ public class Item {
 
     private ItemStatus status;
 
-    private ItemPriority priority;
+    private Boolean highlighted;
+
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Task task;
 }
