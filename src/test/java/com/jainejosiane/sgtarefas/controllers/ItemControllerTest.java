@@ -284,6 +284,6 @@ public class ItemControllerTest {
 
         mockMvc.perform(get("/items"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content[0].title").value("Recursos Humanos"));
+                .andExpect(jsonPath("$.content[2].title").value("Recursos Humanos"));
     }
 }

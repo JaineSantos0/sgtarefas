@@ -1,5 +1,7 @@
 package com.jainejosiane.sgtarefas.controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -7,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -79,20 +84,21 @@ class TaskControllerTest {
 
     @Test
     void shouldFindTaskById() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
 
         String taskJson = "{\n" +
                 "    \"title\" : \"producao\",\n" +
                 "    \"itemList\" : []\n" +
                 "}";
 
-        String response = mockMvc.perform(post("/tasks")
+        MvcResult taskResult = mockMvc.perform(post("/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(taskJson))
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
+                .andReturn();
 
-        Long taskId = Long.parseLong(String.valueOf(jsonPath("$.id").value(response)));
+        String taskResponse = taskResult.getResponse().getContentAsString();
+        Map<String, Object> itemMap = objectMapper.readValue(taskResponse, new TypeReference<Map<String, Object>>() {});
+        Long taskId = Long.valueOf((Integer) itemMap.get("id"));
 
         mockMvc.perform(get("/tasks/{id}", taskId))
                 .andExpect(status().isOk())
