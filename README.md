@@ -94,7 +94,7 @@
     <p>Após rodar a aplicação, você pode acessar a documentação dos endpoints gerada pelo Swagger:</p>
     <ul>
         <li>URL: <a href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></li>
-      <li>Acessandp src/main/resources/static.</li>
+      <li>Acessando no projeto o arquivo swagger.json no caminho src/main/resources/static/swagger.json</li>
     </ul>
 
   <h2>Estrutura do Projeto</h2>
