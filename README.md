@@ -91,7 +91,7 @@
     <pre><code>mvn test</code></pre>
 
   <h2>Documentação da API</h2>
-    <p>Após rodar a aplicação, você pode acessar a documentação dos endpoints gerada pelo Swagger (se implementado):</p>
+    <p>Após rodar a aplicação, você pode acessar a documentação dos endpoints gerada pelo Swagger:</p>
     <ul>
         <li>URL: <a href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></li>
       <li>O arquivo contendo a documentação gerada pelo Swagger pode ser encontrada acessando no projeto a pasta resouces/static.</li>
