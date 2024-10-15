@@ -20,10 +20,10 @@ public class ItemController {
     @Autowired
     private ItemService service;
 
-    @PostMapping("/tasks/{taskId}")
-    public ResponseEntity<ItemDTO> insert(@Valid @RequestBody ItemDTO dto, @PathVariable Long taskId) {
-        dto = service.insert(dto, taskId);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{taskId}").buildAndExpand(dto.getId()).toUri();
+    @PostMapping
+    public ResponseEntity<ItemDTO> insert(@Valid @RequestBody ItemDTO dto) {
+        dto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dto);
     }
