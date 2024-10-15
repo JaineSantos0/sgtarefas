@@ -5,6 +5,7 @@ import com.jainejosiane.sgtarefas.entities.Item;
 import com.jainejosiane.sgtarefas.entities.ItemStatus;
 import com.jainejosiane.sgtarefas.entities.Task;
 import com.jainejosiane.sgtarefas.repositories.ItemRepository;
+import com.jainejosiane.sgtarefas.repositories.TaskRepository;
 import com.jainejosiane.sgtarefas.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,19 +25,20 @@ public class ItemService {
     private ItemRepository repository;
 
     @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
     private TaskService service;
 
     @Transactional
-    public ItemDTO insert(ItemDTO dto, Long taskId) {
+    public ItemDTO insert(ItemDTO dto) {
 
         Item entity = new Item();
 
         copyDtoToEntity(entity, dto);
+        Task task = taskRepository.getReferenceById(dto.getTaskId());
 
-        if (taskId != null) {
-            Task task = service.findTaskById(taskId);
-            entity.setTask(task);
-        }
+        entity.setTask(task);
 
         entity = repository.save(entity);
         return new ItemDTO(entity);
